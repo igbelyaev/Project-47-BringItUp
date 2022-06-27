@@ -4,7 +4,7 @@ export default class Slider {
         this.slides = this.page.children;
         this.btns = document.querySelectorAll(btns);
         this.slideIndex = 1;
-        this.duration = 1000,
+        this.duration = 2000,
         this.start = 0;
     }
 
@@ -45,8 +45,8 @@ export default class Slider {
         //         elem.style.display = 'block';
         //     }, 3000, elem);
         // }
-        // this.start = Date.now();
-        // this.animateSlide(this.slides[this.slideIndex - 1], this.start);
+        this.start = Date.now();
+        this.animateSlide(this.slides[this.slideIndex - 1], this.start);
     }
 
     plusSlides(n) {
@@ -87,7 +87,8 @@ export default class Slider {
 
         if (slide.style.opacity >= 1) {    
         } else { 
-            requestAnimationFrame(this.animateSlide(slide, start).bind(this));    
+            // requestAnimationFrame(this.animateSlide(slide, start).bind(this));    
+            requestAnimationFrame(()=> this.animateSlide(slide, start));
         } 
     }
 }
