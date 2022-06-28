@@ -1925,7 +1925,7 @@ function () {
 
       var progress,
           stamp = Date.now();
-      progress = ((stamp - this.start) / this.duration).toFixed(2);
+      progress = ((stamp - start) / this.duration).toFixed(2);
       console.log(start, stamp);
       console.log(progress);
       slide.style.opacity = String(progress);

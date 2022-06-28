@@ -78,7 +78,7 @@ export default class Slider {
         let progress,
             stamp = Date.now();
         
-        progress = ((stamp - this.start)/this.duration).toFixed(2);
+        progress = ((stamp - start)/this.duration).toFixed(2);
         console.log(start, stamp);
         console.log(progress);
 
@@ -88,7 +88,7 @@ export default class Slider {
         if (slide.style.opacity >= 1) {    
         } else { 
             // requestAnimationFrame(this.animateSlide(slide, start).bind(this));    
-            requestAnimationFrame(()=> this.animateSlide(slide, start));
+            requestAnimationFrame(() => this.animateSlide(slide, start));
         } 
     }
 }
