@@ -31,7 +31,7 @@ export default class VideoPlayer {
         this.player = new YT.Player('iframe', {
             height: '100%',
             width: '100%',
-            videoId: `S{url}`,    
+            videoId: `${url}`,    
         });
 
         console.log(this.player);

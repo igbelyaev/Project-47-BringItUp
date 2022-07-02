@@ -1,8 +1,8 @@
 import Slider from "./slider";
 
 export default class MainSlider extends Slider {
-    constructor(page, btns) {
-        super(page, btns);
+    constructor(btns) {
+        super(btns);
     }
 
     showSlides(n) {
@@ -76,11 +76,11 @@ export default class MainSlider extends Slider {
             stamp = Date.now();
         
         progress = ((stamp - start)/this.duration).toFixed(2);
-        console.log(start, stamp);
-        console.log(progress);
+        // console.log(start, stamp);
+        // console.log(progress);
 
         slide.style.opacity = String(progress);
-        console.log(slide.style.opacity);
+        // console.log(slide.style.opacity);
 
         if (slide.style.opacity >= 1) {    
         } else { 
