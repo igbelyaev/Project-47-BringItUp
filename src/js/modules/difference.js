@@ -7,6 +7,7 @@ export default class Difference {
         // this.items = items;
         this.oldCounter = 0;
         this.newCounter = 0;
+        this.duration = 1000;
     } 
 
     bindTriggers(officer, counter, items) {
@@ -33,9 +34,13 @@ export default class Difference {
         officer.querySelector('.plus').addEventListener('click', () => {
             if (counter !== items.length - 2) {
                 items[counter].style.display = 'flex';
+                this.start = Date.now();
+                this.animateElement(items[counter], this.start);
                 counter++;
             } else {
                 items[counter].style.display = 'flex';
+                this.start = Date.now();
+                this.animateElement(items[counter], this.start);
                 items[items.length - 1].remove();
             }
         });
@@ -59,6 +64,25 @@ export default class Difference {
                 item.style.display = 'none';
             }
         });
+    }
+
+    animateElement(item, start) {
+        let progress,
+            stamp = Date.now();
+        
+        progress = ((stamp - start)/this.duration).toFixed(2);
+        // console.log(start, stamp);
+        // console.log(progress);
+        // console.log(this.duration);
+
+        item.style.opacity = String(progress);
+        console.log(item.style.opacity);
+
+        if (item.style.opacity >= 1) {    
+        } else { 
+            // requestAnimationFrame(this.animateSlide(slide, start).bind(this));    
+            requestAnimationFrame(() => this.animateElement(item, start));
+        } 
     }
 
     init() {

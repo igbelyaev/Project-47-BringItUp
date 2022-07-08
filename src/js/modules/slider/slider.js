@@ -17,7 +17,7 @@ export default class Slider {
         this.animate = animate;
         this.autoplay = autoplay;
         this.slideIndex = 1;
-        this.duration = 2000,
+        this.duration = 1000,
         this.start = 0;
     }
 }

@@ -3002,8 +3002,11 @@ window.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_number_to_fixed__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.to-fixed */ "./node_modules/core-js/modules/es.number.to-fixed.js");
+/* harmony import */ var core_js_modules_es_number_to_fixed__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_to_fixed__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3025,11 +3028,14 @@ function () {
 
     this.oldCounter = 0;
     this.newCounter = 0;
+    this.duration = 1000;
   }
 
   _createClass(Difference, [{
     key: "bindTriggers",
     value: function bindTriggers(officer, counter, items) {
+      var _this = this;
+
       // bindTriggers() {
       // this.oldOfficer.querySelector('.plus').addEventListener('click', () => {
       //     if (this.oldCounter !== this.oldItems.length - 2) {
@@ -3052,9 +3058,17 @@ function () {
       officer.querySelector('.plus').addEventListener('click', function () {
         if (counter !== items.length - 2) {
           items[counter].style.display = 'flex';
+          _this.start = Date.now();
+
+          _this.animateElement(items[counter], _this.start);
+
           counter++;
         } else {
           items[counter].style.display = 'flex';
+          _this.start = Date.now();
+
+          _this.animateElement(items[counter], _this.start);
+
           items[items.length - 1].remove();
         }
       });
@@ -3078,6 +3092,27 @@ function () {
           item.style.display = 'none';
         }
       });
+    }
+  }, {
+    key: "animateElement",
+    value: function animateElement(item, start) {
+      var _this2 = this;
+
+      var progress,
+          stamp = Date.now();
+      progress = ((stamp - start) / this.duration).toFixed(2); // console.log(start, stamp);
+      // console.log(progress);
+      // console.log(this.duration);
+
+      item.style.opacity = String(progress);
+      console.log(item.style.opacity);
+
+      if (item.style.opacity >= 1) {} else {
+        // requestAnimationFrame(this.animateSlide(slide, start).bind(this));    
+        requestAnimationFrame(function () {
+          return _this2.animateElement(item, start);
+        });
+      }
     }
   }, {
     key: "init",
@@ -3598,7 +3633,7 @@ var Slider = function Slider(_ref) {
   this.animate = animate;
   this.autoplay = autoplay;
   this.slideIndex = 1;
-  this.duration = 2000, this.start = 0;
+  this.duration = 1000, this.start = 0;
 };
 
 
