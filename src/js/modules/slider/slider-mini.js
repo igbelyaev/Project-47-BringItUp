@@ -25,19 +25,27 @@ export default class MiniSlider extends Slider {
     }
 
     nextSlide() {
-        if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
-            this.container.appendChild(this.slides[0]); // slide
-            this.container.appendChild(this.slides[1]); // button
-            this.container.appendChild(this.slides[2]); // button
-            this.decorizeSlides();
-        } else if (this.slides[1].tagName == "BUTTON") {
-            this.container.appendChild(this.slides[0]); // slide
-            this.container.appendChild(this.slides[1]); // button
-            this.decorizeSlides();
+        // if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
+        //     this.container.appendChild(this.slides[0]); // slide
+        //     this.container.appendChild(this.slides[1]); // button
+        //     this.container.appendChild(this.slides[2]); // button
+        //     this.decorizeSlides();
+        // } else if (this.slides[1].tagName == "BUTTON") {
+        //     this.container.appendChild(this.slides[0]); // slide
+        //     this.container.appendChild(this.slides[1]); // button
+        //     this.decorizeSlides();
+        // } else {
+        //     this.container.appendChild(this.slides[0]);
+        //     this.decorizeSlides();
+        // }
+
+        if (this.slides[this.slides.length-1].tagName == "BUTTON") {
+            this.slides[this.slides.length-2].before(this.slides[0]);
         } else {
             this.container.appendChild(this.slides[0]);
-            this.decorizeSlides();
         }
+        
+        this.decorizeSlides();
     }
     
     bindTriggers() {
@@ -45,15 +53,51 @@ export default class MiniSlider extends Slider {
 
         this.prev.addEventListener('click', () => {
 
-            for (let i = this.slides.length - 1; i > 0; i--) {
-                if (this.slides[i].tagName !== "BUTTON") {
-                    let active = this.slides[i];
-                    this.container.insertBefore(active, this.slides[0]);
-                    this.decorizeSlides();
-                    break;
-                }
-            }    
+            // for (let i = this.slides.length - 1; i > 0; i--) {
+            //     if (this.slides[i].tagName !== "BUTTON") {
+            //         let active = this.slides[i];
+            //         this.container.insertBefore(active, this.slides[0]);
+            //         this.decorizeSlides();
+            //         break;
+            //     }
+            // } 
+            if (this.slides[this.slides.length-1].tagName == "BUTTON") {
+                this.slides[0].before(this.slides[this.slides.length-3]);
+                this.decorizeSlides();
+            } else {
+                this.slides[0].before(this.slides[this.slides.length-1]);
+                this.decorizeSlides();
+            }   
         });
+    }
+
+    autoSwitch() {
+        if (this.autoplay) {
+            this.switchOn();
+
+            this.container.addEventListener('mouseover', () => {
+               clearInterval(this.switching); 
+            });
+            this.container.addEventListener('mouseleave', () => {
+                this.switchOn(); 
+            });
+            this.prev.addEventListener('mouseover', () => {
+               clearInterval(this.switching); 
+            });
+            this.prev.addEventListener('mouseleave', () => {
+                this.switchOn(); 
+            });
+            this.next.addEventListener('mouseover', () => {
+               clearInterval(this.switching); 
+            });
+            this.next.addEventListener('mouseleave', () => {
+                this.switchOn(); 
+            });
+        }
+    }
+
+    switchOn() {
+        this.switching = setInterval(() => this.nextSlide(), 5000);
     }
 
     init() {
@@ -66,10 +110,7 @@ export default class MiniSlider extends Slider {
 
         this.bindTriggers();
         this.decorizeSlides();
-
-        if (this.autoplay) {
-            setInterval(() => this.nextSlide(), 5000);
-        }
+        this.autoSwitch();
     }
 }
 

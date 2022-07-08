@@ -2948,6 +2948,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/slider-main */ "./src/js/modules/slider/slider-main.js");
 /* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
 /* harmony import */ var _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/slider/slider-mini */ "./src/js/modules/slider/slider-mini.js");
+/* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
+
 
 
 
@@ -2962,13 +2964,15 @@ window.addEventListener('DOMContentLoaded', function () {
     next: '.showup__next',
     prev: '.showup__prev',
     activeClass: 'card-active',
-    animate: true
+    animate: true,
+    btns: '.showup__content-title div'
   });
   showUpSlider.init();
   var modulesSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__["default"]({
     container: '.modules__content-slider',
     next: '.modules__info-btns .slick-next',
     prev: '.modules__info-btns .slick-prev',
+    btns: '.modules__info-btns',
     activeClass: 'card-active',
     animate: true,
     autoplay: true
@@ -2983,7 +2987,112 @@ window.addEventListener('DOMContentLoaded', function () {
   feedSlider.init();
   var player = new _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup .play', '.overlay');
   player.init();
+  new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officernew', '.officer__card-item').init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/difference.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Difference =
+/*#__PURE__*/
+function () {
+  function Difference(oldOfficer, newOfficer, items) {
+    _classCallCheck(this, Difference);
+
+    this.oldOfficer = document.querySelector(oldOfficer);
+    this.newOfficer = document.querySelector(newOfficer);
+    this.oldItems = this.oldOfficer.querySelectorAll(items);
+    this.newItems = this.newOfficer.querySelectorAll(items); // this.items = items;
+
+    this.oldCounter = 0;
+    this.newCounter = 0;
+  }
+
+  _createClass(Difference, [{
+    key: "bindTriggers",
+    value: function bindTriggers(officer, counter, items) {
+      // bindTriggers() {
+      // this.oldOfficer.querySelector('.plus').addEventListener('click', () => {
+      //     if (this.oldCounter !== this.oldItems.length - 2) {
+      //         this.oldItems[this.oldCounter].style.display = 'flex';
+      //         this.oldCounter++;
+      //     } else {
+      //         this.oldItems[this.oldCounter].style.display = 'flex';
+      //         this.oldItems[this.oldItems.length - 1].remove();
+      //     }
+      // });
+      // this.newOfficer.querySelector('.plus').addEventListener('click', () => {
+      //     if (this.newCounter !== this.newItems.length - 2) {
+      //         this.newItems[this.newCounter].style.display = 'flex';
+      //         this.newCounter++;
+      //     } else {
+      //         this.newItems[this.newCounter].style.display = 'flex';
+      //         this.newItems[this.newItems.length - 1].remove();
+      //     }
+      // });
+      officer.querySelector('.plus').addEventListener('click', function () {
+        if (counter !== items.length - 2) {
+          items[counter].style.display = 'flex';
+          counter++;
+        } else {
+          items[counter].style.display = 'flex';
+          items[items.length - 1].remove();
+        }
+      });
+    } // hideItems() {
+    //     this.oldItems.forEach((item, i, arr) => {
+    //         if (i !== arr.length - 1) {
+    //             item.style.display = 'none';
+    //         }
+    //     });
+    //     this.newItems.forEach((item, i, arr) => {
+    //         if (i !== arr.length - 1) {
+    //             item.style.display = 'none';
+    //         }
+    //     });
+
+  }, {
+    key: "hideItems",
+    value: function hideItems(items) {
+      items.forEach(function (item, i, arr) {
+        if (i !== arr.length - 1) {
+          item.style.display = 'none';
+        }
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.hideItems(this.oldItems);
+      this.hideItems(this.newItems);
+      this.bindTriggers(this.oldOfficer, this.oldCounter, this.oldItems);
+      this.bindTriggers(this.newOfficer, this.newCounter, this.newItems);
+    }
+  }]);
+
+  return Difference;
+}();
+
+
 
 /***/ }),
 
@@ -3348,24 +3457,26 @@ function (_Slider) {
   }, {
     key: "nextSlide",
     value: function nextSlide() {
-      if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
-        this.container.appendChild(this.slides[0]); // slide
-
-        this.container.appendChild(this.slides[1]); // button
-
-        this.container.appendChild(this.slides[2]); // button
-
-        this.decorizeSlides();
-      } else if (this.slides[1].tagName == "BUTTON") {
-        this.container.appendChild(this.slides[0]); // slide
-
-        this.container.appendChild(this.slides[1]); // button
-
-        this.decorizeSlides();
+      // if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
+      //     this.container.appendChild(this.slides[0]); // slide
+      //     this.container.appendChild(this.slides[1]); // button
+      //     this.container.appendChild(this.slides[2]); // button
+      //     this.decorizeSlides();
+      // } else if (this.slides[1].tagName == "BUTTON") {
+      //     this.container.appendChild(this.slides[0]); // slide
+      //     this.container.appendChild(this.slides[1]); // button
+      //     this.decorizeSlides();
+      // } else {
+      //     this.container.appendChild(this.slides[0]);
+      //     this.decorizeSlides();
+      // }
+      if (this.slides[this.slides.length - 1].tagName == "BUTTON") {
+        this.slides[this.slides.length - 2].before(this.slides[0]);
       } else {
         this.container.appendChild(this.slides[0]);
-        this.decorizeSlides();
       }
+
+      this.decorizeSlides();
     }
   }, {
     key: "bindTriggers",
@@ -3376,33 +3487,68 @@ function (_Slider) {
         return _this2.nextSlide();
       });
       this.prev.addEventListener('click', function () {
-        for (var i = _this2.slides.length - 1; i > 0; i--) {
-          if (_this2.slides[i].tagName !== "BUTTON") {
-            var active = _this2.slides[i];
+        // for (let i = this.slides.length - 1; i > 0; i--) {
+        //     if (this.slides[i].tagName !== "BUTTON") {
+        //         let active = this.slides[i];
+        //         this.container.insertBefore(active, this.slides[0]);
+        //         this.decorizeSlides();
+        //         break;
+        //     }
+        // } 
+        if (_this2.slides[_this2.slides.length - 1].tagName == "BUTTON") {
+          _this2.slides[0].before(_this2.slides[_this2.slides.length - 3]);
 
-            _this2.container.insertBefore(active, _this2.slides[0]);
+          _this2.decorizeSlides();
+        } else {
+          _this2.slides[0].before(_this2.slides[_this2.slides.length - 1]);
 
-            _this2.decorizeSlides();
-
-            break;
-          }
+          _this2.decorizeSlides();
         }
       });
     }
   }, {
-    key: "init",
-    value: function init() {
+    key: "autoSwitch",
+    value: function autoSwitch() {
       var _this3 = this;
 
+      if (this.autoplay) {
+        this.switchOn();
+        this.container.addEventListener('mouseover', function () {
+          clearInterval(_this3.switching);
+        });
+        this.container.addEventListener('mouseleave', function () {
+          _this3.switchOn();
+        });
+        this.prev.addEventListener('mouseover', function () {
+          clearInterval(_this3.switching);
+        });
+        this.prev.addEventListener('mouseleave', function () {
+          _this3.switchOn();
+        });
+        this.next.addEventListener('mouseover', function () {
+          clearInterval(_this3.switching);
+        });
+        this.next.addEventListener('mouseleave', function () {
+          _this3.switchOn();
+        });
+      }
+    }
+  }, {
+    key: "switchOn",
+    value: function switchOn() {
+      var _this4 = this;
+
+      this.switching = setInterval(function () {
+        return _this4.nextSlide();
+      }, 5000);
+    }
+  }, {
+    key: "init",
+    value: function init() {
       this.container.style.cssText = "\n            display: flex;\n            flex-wrap: wrap;\n            overflow: hidden;\n            align-items: flex-start;\n        ";
       this.bindTriggers();
       this.decorizeSlides();
-
-      if (this.autoplay) {
-        setInterval(function () {
-          return _this3.nextSlide();
-        }, 5000);
-      }
+      this.autoSwitch();
     }
   }]);
 
